@@ -50,6 +50,9 @@ class GithubRepo: CustomStringConvertible {
         if let repoDescription = jsonResult["description"] as? String {
             self.repoDescription = repoDescription
         }
+        else {
+            self.repoDescription = "No description given"
+        }
     }
     
     // Actually fetch the list of repositories from the GitHub API.
@@ -96,7 +99,8 @@ class GithubRepo: CustomStringConvertible {
 
     // Creates a text representation of a GitHub repo
     var description: String {
-        return "[Name: \(self.name!)]" +
+        return
+            "[Name: \(self.name!)]" +
             "\n\t[Stars: \(self.stars!)]" +
             "\n\t[Forks: \(self.forks!)]" +
             "\n\t[Owner: \(self.ownerHandle!)]" +

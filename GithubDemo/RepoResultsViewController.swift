@@ -23,6 +23,8 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
 
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 180
         
         // Initialize the UISearchBar
         searchBar = UISearchBar()

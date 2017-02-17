@@ -33,14 +33,14 @@ class RepoCell: UITableViewCell {
             }
             
             if let ownerHandle = repo.ownerHandle! as String? {
-                self.ownerLabel.text = ownerHandle
+                self.ownerLabel.text = "by: \(ownerHandle)"
             }
             if let ownerAvatarURL = repo.ownerAvatarURL! as String? {
                 let ownerUrl = URL(string: ownerAvatarURL)
                 self.repoImage.setImageWith(ownerUrl!)
             }
             
-            if let repoDescription = repo.description as String? {
+            if let repoDescription = repo.repoDescription as String? {
                 self.descriptionLabel.text = repoDescription
             }
         }
