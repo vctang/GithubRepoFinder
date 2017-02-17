@@ -20,29 +20,28 @@ class RepoCell: UITableViewCell {
     var repo: GithubRepo!
     {
         didSet{
-            if let name = jsonResult["name"] as? String {
-                self.name = name
+            if let name = repo.name! as String? {
+                self.nameLabel.text = name
             }
             
-            if let stars = jsonResult["stargazers_count"] as? Int? {
-                self.stars = stars
+            if let stars = repo.stars! as Int? {
+                self.starLabel.text = "\(stars)"
             }
             
-            if let forks = jsonResult["forks_count"] as? Int? {
-                self.forks = forks
+            if let forks = repo.forks! as Int? {
+                self.forksLabel.text = "\(forks)"
             }
             
-            if let owner = jsonResult["owner"] as? NSDictionary {
-                if let ownerHandle = owner["login"] as? String {
-                    self.ownerHandle = ownerHandle
-                }
-                if let ownerAvatarURL = owner["avatar_url"] as? String {
-                    self.ownerAvatarURL = ownerAvatarURL
-                }
+            if let ownerHandle = repo.ownerHandle! as String? {
+                self.ownerLabel.text = ownerHandle
+            }
+            if let ownerAvatarURL = repo.ownerAvatarURL! as String? {
+                let ownerUrl = URL(string: ownerAvatarURL)
+                self.repoImage.setImageWith(ownerUrl!)
             }
             
-            if let repoDescription = jsonResult["description"] as? String {
-                self.repoDescription = repoDescription
+            if let repoDescription = repo.description as String? {
+                self.descriptionLabel.text = repoDescription
             }
         }
     }
@@ -50,7 +49,6 @@ class RepoCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        repoImage.setImageWithURL()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

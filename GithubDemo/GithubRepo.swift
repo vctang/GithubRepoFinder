@@ -66,11 +66,7 @@ class GithubRepo: CustomStringConvertible {
                 }
                 successCallback(repos)
             }
-        }) { (operation: AFHTTPRequestOperation, requestError: Error) in
-            if let errorCallback = error {
-                errorCallback(requestError)
-            }
-        }
+        })
     }
     
     // Helper method that constructs a dictionary of the query parameters used in the request to the

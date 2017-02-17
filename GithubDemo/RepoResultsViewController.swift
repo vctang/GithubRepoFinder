@@ -22,7 +22,7 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.dataSource = repos
+        tableView.dataSource = self
         
         // Initialize the UISearchBar
         searchBar = UISearchBar()
@@ -35,6 +35,19 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource {
         // Perform the first search when the view controller first loads
         doSearch()
     }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if repos != nil {
+            return repos.count
+        }
+        else {
+            return  0
+        }
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RepoCell", for: indexPath as IndexPath) as! RepoCell
+        cell.repo = repos[indexPath.row]        
+        return cell
+    }
 
     // Perform the search.
     fileprivate func doSearch() {
@@ -43,19 +56,19 @@ class RepoResultsViewController: UIViewController, UITableViewDataSource {
 
         // Perform request to GitHub API to get the list of repositories
         GithubRepo.fetchRepos(searchSettings, successCallback: { (newRepos) -> Void in
-        repos = newRepos
+        self.repos = newRepos
             
             // Print the returned repositories to the output window
             for repo in newRepos {
                 print(repo)
             }   
-
+            self.tableView.reloadData()
             MBProgressHUD.hide(for: self.view, animated: true)
             }, error: { (error) -> Void in
                 print(error)
         })
         
-        tableView.reloadData()
+        
     }
 }
 
